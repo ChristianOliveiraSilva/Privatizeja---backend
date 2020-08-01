@@ -21,7 +21,7 @@ class SelectCompaniesEndpoint extends Endpoint
         parent::__construct();
         $id = $this->getSanitalizedResquest('id');
         $stmt = $this->execute("select * from company where id = :id", ['id' => $id]);
-        $this->addResponse('companies', SqlHelper::createArrayFromSQLReturn($stmt));
+        $this->addResponse('company', SqlHelper::createArrayFromSQLReturn($stmt));
     }
 }
 (new SelectCompaniesEndpoint);

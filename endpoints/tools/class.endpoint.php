@@ -55,7 +55,7 @@ class Endpoint
      */
     function __construct($validateJTW = true)
     {
-        // header("Content-type: application/json");
+        header("Content-type: application/json");
 
         // Validações na requsição
         $this->ignoreRequestMethodIfNotPost();
@@ -66,7 +66,7 @@ class Endpoint
         $this->paramCleaner = new ParamCleaner;
         $this->response = new Response;
         $this->connection = new Connection;
-        // register_shutdown_function(array($this, 'answerRequest'));
+        register_shutdown_function(array($this, 'answerRequest'));
     }
 
     /*
@@ -139,6 +139,25 @@ class Endpoint
     public function setInSession(string $key, string $value)
     {
         return $this->sessionManager->set($key, $value);
+    }
+
+    /*
+     * Destroi um valor na sessão
+     * @param string $key Chave da Sessão
+     * @return void
+     */
+    public function destroyInSession(string $key)
+    {
+        $this->sessionManager->destroy($key);
+    }
+
+    /*
+     * Destroi todos os valores na sessão
+     * @return void
+     */
+    public function destroyAllSession()
+    {
+        $this->sessionManager->destroyAll();
     }
 
     /*
@@ -273,11 +292,30 @@ class Endpoint
 
     /*
      * Retorna o id do usuário
-     * @return int
+     * @return int|null
      */
-    public function getIdLoggedUser() :int
+    public function getIdLoggedUser()
     {
-        return 1;
+        $values = $this->getValuesInJWT();
+        return $values['id'] ?? null;
+    }
+
+
+    /*
+     * Retorna o id do usuário ou morre
+     * @return int|null
+     */
+    public function getIdLoggedUserOrDie()
+    {
+        $values = $this->getValuesInJWT();
+        if (isset($values['id'])) {
+            return $values['id'];
+        }
+
+        $this->setResponse(new Response);
+        $this->addResponse('Error', 'User is not logged');
+        $this->addResponse('status', 400);
+        exit();
     }
 
     /*
@@ -286,7 +324,7 @@ class Endpoint
      * @params int $expiration Tempo a ser esperido o JWT
      * @return void
      */
-    public function createJWTAndSetInSession(array $payloadInfo, $expiration = 3600)
+    public function createJWTAndSetInSession(array $payloadInfo, int $expiration = 3600)
     {
         $this->setInSession('JWT', JWTParser::createJWT($payloadInfo, $expiration));
     }
@@ -315,4 +353,5 @@ class Endpoint
             return [];
         }
     }
+
 }

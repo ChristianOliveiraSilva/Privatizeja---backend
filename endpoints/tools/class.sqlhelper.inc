@@ -48,8 +48,8 @@ class SqlHelper
         $values = [];
         while ($result = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $value = [];
-            foreach ($result as $keyResult => $valueResult)
-                $value[$keyResult] = $valueResult;
+            foreach ($result as $resultKey => $resultValue)
+                $value[$resultKey] = $resultValue;
 
             $values[] = $value;
         }

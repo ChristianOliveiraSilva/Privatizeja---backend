@@ -31,7 +31,7 @@ class JWTParser
      * @params int $expiration Tempo a ser esperido o JWT
      * @return string
      */
-    public static function createPayloadToken(array $payloadInfo, $expiration = 3600) :string
+    public static function createPayloadToken(array $payloadInfo, int $expiration = 3600) :string
     {
         $payload = [
             "iss" => "privatizeja.com.br",
@@ -61,7 +61,7 @@ class JWTParser
      * @params int $expiration Tempo a ser esperido o JWT
      * @return string
      */
-    public static function createJWT(array $payloadInfo, $expiration = 3600) :string
+    public static function createJWT(array $payloadInfo, int $expiration = 3600) :string
     {
         $base64UrlHeader = JWTParser::createHeaderToken();
         $base64UrlPayload = JWTParser::createPayloadToken($payloadInfo, $expiration);
@@ -101,6 +101,6 @@ class JWTParser
 
         $payload =  str_replace(['-', '_'], ['+', '/'], $payload);
         $payload = base64_decode($payload);
-        return (array) json_decode($payload);
+        return array_diff_key((array) json_decode($payload), ["iss" => "privatizeja.com.br","exp" => time()]);
     }
 }

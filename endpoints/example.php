@@ -19,9 +19,8 @@ class ExampleEndpoint extends Endpoint
     function __construct()
     {
         parent::__construct();
-        // $this->createJWTAndSetInSession(['name' => 'chris']);
-        echo $_SESSION['JWT'].'<br>';
-        var_dump( $this->getValuesInJWT());
+        $this->addResponse('sessao',$_SESSION);
+        $this->addResponse('id do user',$this->getIdLoggedUserOrDie());
     }
 }
 (new ExampleEndpoint);

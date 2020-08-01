@@ -55,10 +55,9 @@ class SessionManager
 
     /*
      * Destroi todos os valores na sessão
-     * @param string $key Chave da Sessão
      * @return void
      */
-    public function destroyAll(string $key)
+    public function destroyAll()
     {
         session_unset();
         session_destroy();

@@ -19,7 +19,7 @@ class AssignEndpoint extends Endpoint
     {
         parent::__construct();
         $id_company = $this->getSanitalizedResquest('id_company');
-        $id_user_account = $this->getIdLoggedUser(); ######################MOCADO####################
+        $id_user_account = $this->getIdLoggedUserOrDie();
 
         $stmt = $this->execute("INSERT INTO signature VALUES(default, :id_user_account, :id_company, NOW())", [
             'id_user_account' => $id_user_account,

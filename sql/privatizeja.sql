@@ -15,7 +15,6 @@ CREATE TABLE company(
     name varchar(256) not null,
     initials varchar(10),
     created date,
-    cpf varchar(11),
     history varchar(1024) not null,
     logo varchar(256)
 );

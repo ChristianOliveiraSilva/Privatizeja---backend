@@ -38,7 +38,7 @@ class Connection
      * Funcao para fazer execução de sql
      * @param string $sql sql a ser executado
      * @param array $bind bind variables
-     * @return mixed
+     * @return \PDOStatement
      */
     public function execute(string $sql, array $bind = []) :\PDOStatement
     {
@@ -51,7 +51,7 @@ class Connection
 
             $stmt->execute();
             return $stmt;
-        } catch(PDOException $e) {
+        } catch(\PDOException $e) {
             echo $e->getMessage();
         }
     }

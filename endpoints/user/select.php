@@ -21,7 +21,7 @@ class SelectUsersEndpoint extends Endpoint
         parent::__construct();
         $id = $this->getSanitalizedResquest('id');
         $stmt = $this->execute("select * from user_account where id = :id", ['id' => $id]);
-        $this->addResponse('users', SqlHelper::createArrayFromSQLReturn($stmt));
+        $this->addResponse('user', SqlHelper::createArrayFromSQLReturn($stmt));
     }
 }
 (new SelectUsersEndpoint);
