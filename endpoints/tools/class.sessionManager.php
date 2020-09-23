@@ -38,7 +38,7 @@ class SessionManager
      * @param string $value Valor da Sessão
      * @return void
      */
-    public function set(string $key, string $value)
+    public function set(string $key, string $value) :void
     {
         $_SESSION[$key] = $value;
     }
@@ -48,7 +48,7 @@ class SessionManager
      * @param string $key Chave da Sessão
      * @return void
      */
-    public function destroy(string $key)
+    public function destroy(string $key) :void
     {
         unset($_SESSION[$key]);
     }
@@ -57,7 +57,7 @@ class SessionManager
      * Destroi todos os valores na sessão
      * @return void
      */
-    public function destroyAll()
+    public function destroyAll() :void
     {
         session_unset();
         session_destroy();

@@ -74,7 +74,7 @@ class Endpoint
      * @param $paramCleaner
      * @return void
      */
-    public function ignoreRequestMethodIfNotPost()
+    public function ignoreRequestMethodIfNotPost() :void
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST' && !Endpoint::isDev) {
             echo json_encode(['alert' => 'REQUEST METHOD is not POST']);
@@ -87,7 +87,7 @@ class Endpoint
      * @param $paramCleaner
      * @return void
      */
-    public function validateJWTOrDie()
+    public function validateJWTOrDie() :void
     {
         if ($this->hasInSession('JWT') && JWTParser::isValid($_SESSION['JWT']) && !Endpoint::isDev) {
             echo json_encode(['alert' => 'JWT was not sent']);
@@ -134,11 +134,11 @@ class Endpoint
     /*
      * Seta o valor na sessão
      * @param string $key Chave da Sessão
-     * @return string
+     * @return void
      */
-    public function setInSession(string $key, string $value)
+    public function setInSession(string $key, string $value) :void
     {
-        return $this->sessionManager->set($key, $value);
+        $this->sessionManager->set($key, $value);
     }
 
     /*
@@ -146,7 +146,7 @@ class Endpoint
      * @param string $key Chave da Sessão
      * @return void
      */
-    public function destroyInSession(string $key)
+    public function destroyInSession(string $key) :void
     {
         $this->sessionManager->destroy($key);
     }
@@ -155,7 +155,7 @@ class Endpoint
      * Destroi todos os valores na sessão
      * @return void
      */
-    public function destroyAllSession()
+    public function destroyAllSession() :void
     {
         $this->sessionManager->destroyAll();
     }
@@ -165,7 +165,7 @@ class Endpoint
      * @param $paramCleaner
      * @return void
      */
-    public function setParamCleaner(ParamCleaner $paramCleaner)
+    public function setParamCleaner(ParamCleaner $paramCleaner) :void
     {
         $this->paramCleaner = $paramCleaner;
     }
@@ -228,7 +228,7 @@ class Endpoint
      * @param $response
      * @return void
      */
-    public function setResponse(Response $response)
+    public function setResponse(Response $response) :void
     {
         $this->response = $response;
     }
@@ -248,7 +248,7 @@ class Endpoint
      * @param $value Valor Item a ser inserido
      * @return void
      */
-    public function addResponse(string $key, $value)
+    public function addResponse(string $key, $value) :void
     {
         $this->response->addItem($key, $value);
     }
@@ -257,7 +257,7 @@ class Endpoint
      * Ser executado no final da executação como Resposta a requisição
      * @return void
      */
-    public function answerRequest()
+    public function answerRequest() :void
     {
         echo $this->response->answer();
     }
@@ -267,7 +267,7 @@ class Endpoint
      * @param $connection
      * @return void
      */
-    public function setConnection(Connection $connection)
+    public function setConnection(Connection $connection) :void
     {
         $this->connection = $connection;
     }
@@ -294,7 +294,7 @@ class Endpoint
      * Retorna o id do usuário
      * @return int|null
      */
-    public function getIdLoggedUser()
+    public function getIdLoggedUser() :?int
     {
         $values = $this->getValuesInJWT();
         return $values['id'] ?? null;
@@ -305,7 +305,7 @@ class Endpoint
      * Retorna o id do usuário ou morre
      * @return int|null
      */
-    public function getIdLoggedUserOrDie()
+    public function getIdLoggedUserOrDie() :?int
     {
         $values = $this->getValuesInJWT();
         if (isset($values['id'])) {
@@ -314,7 +314,8 @@ class Endpoint
 
         $this->setResponse(new Response);
         $this->addResponse('Error', 'User is not logged');
-        $this->addResponse('status', 400);
+        $this->addResponse('status', 403);
+        http_response_code(403);
         exit();
     }
 
@@ -324,7 +325,7 @@ class Endpoint
      * @params int $expiration Tempo a ser esperido o JWT
      * @return void
      */
-    public function createJWTAndSetInSession(array $payloadInfo, int $expiration = 3600)
+    public function createJWTAndSetInSession(array $payloadInfo, int $expiration = 3600) :void
     {
         $this->setInSession('JWT', JWTParser::createJWT($payloadInfo, $expiration));
     }
@@ -337,7 +338,7 @@ class Endpoint
      */
     public function createJWT(array $payloadInfo, $expiration = 3600) :string
     {
-        JWTParser::createJWT($payloadInfo, $expiration);
+        return JWTParser::createJWT($payloadInfo, $expiration);
     }
 
     /*

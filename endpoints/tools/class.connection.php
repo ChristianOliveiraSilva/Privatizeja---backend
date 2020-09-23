@@ -24,13 +24,15 @@ class Connection
      * @param string $password senha do banco de dados
      * @return ParamCleaner
      */
-    public function connect(string $host, string $user, string $password)
+    public function connect(string $host, string $user, string $password) :void
     {
         $database = Connection::DBNAME;
         try {
             $this->conn = new \PDO("pgsql:host=$host dbname=$database user=$user password=$password");
         } catch (\PDOException $e) {
             echo $e->getMessage();
+            http_response_code(500);
+            exit();
         }
     }
 
@@ -53,6 +55,8 @@ class Connection
             return $stmt;
         } catch(\PDOException $e) {
             echo $e->getMessage();
+            http_response_code(500);
+            exit();
         }
     }
 

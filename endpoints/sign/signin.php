@@ -27,6 +27,7 @@ class SignInEndpoint extends Endpoint
             $this->setResponse(new Response);
             $this->addResponse('Error', 'Email and Login is absent');
             $this->addResponse('status', 400);
+            http_response_code(400);
             exit();
         }
 

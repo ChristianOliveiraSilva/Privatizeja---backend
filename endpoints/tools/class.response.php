@@ -31,7 +31,7 @@ class Response
      * @param $response
      * @return void
      */
-    public function setResponse(array $response)
+    public function setResponse(array $response) :void
     {
         $this->response = $response;
     }
@@ -51,7 +51,7 @@ class Response
      * @param string | array $value
      * @return void
      */
-    public function addItem(string $key, $value)
+    public function addItem(string $key, $value) :void
     {
         $this->response = array_merge($this->response, [$key => $value]);
     }

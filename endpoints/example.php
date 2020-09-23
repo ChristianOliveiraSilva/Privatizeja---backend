@@ -19,7 +19,7 @@ class ExampleEndpoint extends Endpoint
     function __construct()
     {
         parent::__construct();
-        $this->addResponse('sessao',$_SESSION);
+        $this->addResponse('sessao', $_SESSION);
         $this->addResponse('id do user',$this->getIdLoggedUserOrDie());
     }
 }

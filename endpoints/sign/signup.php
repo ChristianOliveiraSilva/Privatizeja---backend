@@ -37,8 +37,10 @@ class SignUpEndpoint extends Endpoint
         if ($result !== false) {
             $this->addResponse('message', 'OK');
         } else {
-            $this->addResponse('status', 500);
+            $this->addResponse('status', 400);
             $this->addResponse('Error', $stmt->errorInfo()[2]);
+            http_response_code(400);
+            exit();
         }
     }
 }
