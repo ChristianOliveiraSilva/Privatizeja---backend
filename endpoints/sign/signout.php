@@ -1,8 +1,8 @@
 <?php
 namespace endpoint;
 
-require_once '../tools/class.endpoint.php';
-require_once '../tools/class.sqlhelper.inc';
+require_once '../../tools/class.endpoint.php';
+require_once '../../tools/class.sqlhelper.inc';
 
 use privatizeja\endpoint\Endpoint;
 use privatizeja\SqlHelper\SqlHelper;

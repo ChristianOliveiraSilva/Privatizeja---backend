@@ -5,8 +5,8 @@ namespace endpoint;
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-require_once '../tools/class.endpoint.php';
-require_once '../tools/class.sqlhelper.inc';
+require_once '../../tools/class.endpoint.php';
+require_once '../../tools/class.sqlhelper.inc';
 
 use privatizeja\endpoint\Endpoint;
 
