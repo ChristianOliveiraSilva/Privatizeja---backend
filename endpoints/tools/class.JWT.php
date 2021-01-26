@@ -12,7 +12,7 @@ class JWTParser
      * Função para criação do cabeçalho token
      * @return string
      */
-    public static function createHeaderToken() :string
+    private static function createHeaderToken() :string
     {
         static $header;
         if (!empty($header)) {
@@ -31,7 +31,7 @@ class JWTParser
      * @params int $expiration Tempo a ser esperido o JWT
      * @return string
      */
-    public static function createPayloadToken(array $payloadInfo, int $expiration = 3600) :string
+    private static function createPayloadToken(array $payloadInfo, int $expiration = 3600) :string
     {
         $payload = [
             "iss" => "privatizeja.com.br",
@@ -48,7 +48,7 @@ class JWTParser
      * @params string $base64UrlPayload payload do JWT
      * @return string
      */
-    public static function createSignatureToken(string $base64UrlHeader, string $base64UrlPayload) :string
+    private static function createSignatureToken(string $base64UrlHeader, string $base64UrlPayload) :string
     {
         $signature = hash_hmac('sha256', "$base64UrlHeader.$base64UrlPayload", JWTParser::SECRET, true);
 

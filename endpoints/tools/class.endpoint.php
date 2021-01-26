@@ -74,7 +74,7 @@ class Endpoint
      * @param $paramCleaner
      * @return void
      */
-    public function ignoreRequestMethodIfNotPost() :void
+    private function ignoreRequestMethodIfNotPost() :void
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST' && !Endpoint::isDev) {
             echo json_encode(['alert' => 'REQUEST METHOD is not POST']);
@@ -84,10 +84,9 @@ class Endpoint
 
     /*
      * Valida o JWT e mata caso não exista
-     * @param $paramCleaner
      * @return void
      */
-    public function validateJWTOrDie() :void
+    private function validateJWTOrDie() :void
     {
         if ($this->hasInSession('JWT') && JWTParser::isValid($_SESSION['JWT']) && !Endpoint::isDev) {
             echo json_encode(['alert' => 'JWT was not sent']);
@@ -118,7 +117,7 @@ class Endpoint
      */
     public function hasInSession(string $key) :bool
     {
-        return $this->sessionManager->has($key);
+        return $this->getSessionManager()->has($key);
     }
 
     /*
@@ -128,7 +127,7 @@ class Endpoint
      */
     public function getInSession(string $key) :string
     {
-        return $this->sessionManager->get($key);
+        return $this->getSessionManager()->get($key);
     }
 
     /*
@@ -138,7 +137,7 @@ class Endpoint
      */
     public function setInSession(string $key, string $value) :void
     {
-        $this->sessionManager->set($key, $value);
+        $this->getSessionManager()->set($key, $value);
     }
 
     /*
@@ -148,7 +147,7 @@ class Endpoint
      */
     public function destroyInSession(string $key) :void
     {
-        $this->sessionManager->destroy($key);
+        $this->getSessionManager()->destroy($key);
     }
 
     /*
@@ -157,7 +156,7 @@ class Endpoint
      */
     public function destroyAllSession() :void
     {
-        $this->sessionManager->destroyAll();
+        $this->getSessionManager()->destroyAll();
     }
 
     /*
@@ -187,7 +186,7 @@ class Endpoint
      */
     public function isValid(string $request, string $flag) :bool
     {
-        $this->paramCleaner->validate($request, $flag);
+        $this->getParamCleaner()->validate($request, $flag);
     }
 
     /*
@@ -209,7 +208,7 @@ class Endpoint
             }
         }
 
-        return $this->paramCleaner->sanitalize($_REQUEST[$request], $flag);
+        return $this->getParamCleaner()->sanitalize($_REQUEST[$request], $flag);
     }
 
     /*
@@ -220,7 +219,7 @@ class Endpoint
      */
     public function getSanitalizedValue(string $request, string $flag = 'FILTER_SANITIZE_STRING') :string
     {
-        return $this->paramCleaner->sanitalize($request, $flag);
+        return $this->getParamCleaner()->sanitalize($request, $flag);
     }
 
     /*
@@ -250,7 +249,7 @@ class Endpoint
      */
     public function addResponse(string $key, $value) :void
     {
-        $this->response->addItem($key, $value);
+        $this->getResponse()->addItem($key, $value);
     }
 
     /*
@@ -259,7 +258,7 @@ class Endpoint
      */
     public function answerRequest() :void
     {
-        echo $this->response->answer();
+        echo $this->getResponse()->answer();
     }
 
     /*
@@ -308,6 +307,7 @@ class Endpoint
     public function getIdLoggedUserOrDie() :?int
     {
         $values = $this->getValuesInJWT();
+
         if (isset($values['id'])) {
             return $values['id'];
         }
@@ -328,17 +328,6 @@ class Endpoint
     public function createJWTAndSetInSession(array $payloadInfo, int $expiration = 3600) :void
     {
         $this->setInSession('JWT', JWTParser::createJWT($payloadInfo, $expiration));
-    }
-
-    /*
-     * Função para criação de token
-     * @params array $payloadInfo array para ser mergiado com o payload
-     * @params int $expiration Tempo a ser esperido o JWT
-     * @return string
-     */
-    public function createJWT(array $payloadInfo, $expiration = 3600) :string
-    {
-        return JWTParser::createJWT($payloadInfo, $expiration);
     }
 
     /*
