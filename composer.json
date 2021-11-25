@@ -1,0 +1,5 @@
+{
+    "require": {
+        "mpa/micro-php-answerer": "dev-main"
+    }
+}
