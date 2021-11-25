@@ -1,6 +1,8 @@
 <?php
 namespace endpoint;
 
+require_once '../vendor/autoload.php';
+
 use MicroPHPAnswerer\Tools\Endpoint;
 
 /**
