@@ -1,9 +1,7 @@
 <?php
 namespace endpoint;
 
-
-
-use privatizeja\endpoint\Endpoint;
+use MicroPHPAnswerer\Tools\Endpoint;
 
 /**
  * Classe para fazer uma assinatura

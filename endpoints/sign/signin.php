@@ -1,10 +1,8 @@
 <?php
 namespace endpoint;
 
-
-
-use privatizeja\endpoint\Endpoint;
-use privatizeja\SqlHelper\SqlHelper;
+use MicroPHPAnswerer\Tools\Endpoint;
+use MicroPHPAnswerer\Tools\Helpers\SqlHelper;
 
 /**
  * Classe de Logar no sistema
