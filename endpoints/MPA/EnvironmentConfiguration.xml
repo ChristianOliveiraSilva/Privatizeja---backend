@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Enviroment>
-    <sgbd>pgsql</sgbd>
-    <host>localhost</host>
-    <database>betcreator</database>
-    <user>postgres</user>
-    <password>postgres</password>
+    <sgbd>xxxxxxxxx</sgbd>
+    <host>xxxxxxxxx</host>
+    <database>xxxxxxxxx</database>
+    <user>xxxxxxxxx</user>
+    <password>xxxxxxxxx</password>
     <isDev>true</isDev>
 </Enviroment>
